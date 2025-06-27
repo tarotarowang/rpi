@@ -1,145 +1,206 @@
-# Rakuten API Demo
+# Rakuten Product Search Application
 
-一个响应式的 Web 应用，用于查询 Rakuten 商品并显示最低价格的10件商品。
+A responsive web application for searching Rakuten products with affiliate links. Built with React frontend and Node.js backend.
 
-## 功能特性
+## Features
 
-- 📖 **Guide 页面**: 详细的 Rakuten Developer ID 注册指南
-- ⚙️ **设置页面**: 配置 Application ID 和 Affiliate ID
-- 🔍 **商品查询**: 搜索并显示最低价格的10件商品
-- 📱 **响应式设计**: 支持桌面和移动设备
-- 🧪 **完整测试**: 单元测试和端到端测试
+- **Guide Page**: Step-by-step instructions for registering Rakuten Developer ID and getting App ID
+- **Settings Page**: Save and manage Rakuten Developer ID and App ID in database
+- **Search Page**: Search products by keyword and display 10 cheapest items with affiliate links
+- **Responsive Design**: Modern UI built with Ant Design
+- **Full Testing**: Unit tests, integration tests, and end-to-end tests
 
-## 技术栈
+## Tech Stack
 
-- **前端**: React + Ant Design
-- **后端**: Node.js + Express + SQLite
-- **测试**: Jest (单元测试) + Cypress (端到端测试)
+### Frontend
+- React 18
+- Ant Design
+- React Router
+- Axios
 
-## 快速开始
+### Backend
+- Node.js
+- Express.js
+- SQLite3
+- Jest (testing)
 
-### 1. 安装依赖
+### Testing
+- Jest (unit tests)
+- Supertest (integration tests)
+- Cypress (E2E tests)
 
+## Quick Start
+
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/tarotarowang/rpi.git
+   cd rpi
+   ```
+
+2. **Install dependencies**
+   ```bash
+   # Install root dependencies
+   npm install
+   
+   # Install backend dependencies
+   cd backend && npm install
+   
+   # Install frontend dependencies
+   cd ../frontend && npm install
+   ```
+
+3. **Start the application**
+   ```bash
+   # Start backend (from root directory)
+   cd backend && npm start
+   
+   # Start frontend (in new terminal, from root directory)
+   cd frontend && npm start
+   ```
+
+4. **Access the application**
+   - Frontend: http://localhost:3001
+   - Backend API: http://localhost:3001/api
+
+## Branch Strategy
+
+### Environment Branches
+- **master**: Main development branch
+- **Test**: Testing environment branch
+- **STG**: Staging environment branch  
+- **Prod**: Production environment branch
+
+### Workflow
+1. Create feature branches from `master`
+2. Develop and test features
+3. Create Pull Request to `master`
+4. After review, merge to `master`
+5. Deploy to environments via branch promotions:
+   - `master` → `Test` (automated testing)
+   - `Test` → `STG` (staging validation)
+   - `STG` → `Prod` (production deployment)
+
+### Team Collaboration
 ```bash
-# 安装所有依赖
-npm run install:all
+# Create feature branch
+git checkout master
+git pull origin master
+git checkout -b feature/your-feature-name
+
+# Develop and commit
+git add .
+git commit -m "feat: add new feature"
+
+# Push and create PR
+git push origin feature/your-feature-name
+# Create Pull Request on GitHub
 ```
 
-### 2. 启动开发服务器
+## Environment Variables
 
-```bash
-# 同时启动前端和后端
-npm run dev
-
-# 或者分别启动
-npm run start:backend  # 后端 (http://localhost:3001)
-npm run start:frontend # 前端 (http://localhost:3000)
+### Backend (.env)
+```env
+PORT=3001
+NODE_ENV=development
+DATABASE_PATH=./rpi.db
+RAKUTEN_API_BASE_URL=https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706
 ```
 
-### 3. 访问应用
-
-打开浏览器访问 [http://localhost:3000](http://localhost:3000)
-
-## 测试
-
-### 运行所有测试
-
-```bash
-# 运行后端单元测试
-npm run test:backend
-
-# 运行前端单元测试
-npm run test:frontend
-
-# 运行端到端测试
-npm run test:e2e
-
-# 运行所有测试
-npm run test:all
+### Frontend (.env)
+```env
+REACT_APP_API_URL=http://localhost:3001/api
 ```
 
-### 测试覆盖率
+## API Endpoints
 
+### Settings
+- `GET /api/settings` - Get saved settings
+- `POST /api/settings` - Save settings
+
+### Search
+- `GET /api/search?keyword={keyword}` - Search products
+
+## Testing
+
+### Run All Tests
 ```bash
-# 后端测试覆盖率
+# Backend tests
+cd backend && npm test
+
+# Frontend tests  
+cd frontend && npm test
+
+# E2E tests
+cd frontend && npm run cypress:open
+```
+
+### Test Coverage
+```bash
+# Backend coverage
 cd backend && npm run test:coverage
+
+# Frontend coverage
+cd frontend && npm run test:coverage
 ```
 
-## 项目结构
+## Deployment
 
-```
-rpi/
-├── backend/                 # 后端服务
-│   ├── index.js            # 主服务器文件
-│   ├── index.test.js       # 后端测试
-│   └── package.json
-├── frontend/               # 前端应用
-│   ├── src/
-│   │   ├── App.js         # 主应用组件
-│   │   ├── GuidePage.js   # 指南页面
-│   │   ├── SettingsPage.js # 设置页面
-│   │   ├── SearchPage.js  # 查询页面
-│   │   └── App.test.js    # 前端测试
-│   ├── cypress/           # 端到端测试
-│   └── package.json
-└── README.md
-```
-
-## API 文档
-
-### 后端 API
-
-- `GET /` - 健康检查
-- `GET /api/settings` - 获取设置
-- `POST /api/settings` - 保存设置
-- `POST /api/search` - 商品搜索
-
-### 前端页面
-
-- `/` - Guide 页面（默认）
-- `/settings` - 设置页面
-- `/search` - 商品查询页面
-
-## 开发指南
-
-### 添加新功能
-
-1. 在后端添加新的 API 路由
-2. 在前端添加对应的组件
-3. 编写单元测试
-4. 编写端到端测试
-
-### 代码规范
-
-- 使用 ESLint 进行代码检查
-- 遵循 React 最佳实践
-- 保持测试覆盖率 > 80%
-
-## 部署
-
-### 生产环境
-
+### Development
 ```bash
-# 构建前端
+# Backend
+cd backend && npm start
+
+# Frontend
+cd frontend && npm start
+```
+
+### Production Build
+```bash
+# Frontend build
 cd frontend && npm run build
 
-# 启动后端
+# Backend (use PM2 or similar)
 cd backend && npm start
 ```
 
-### 环境变量
+## Project Structure
 
-- `PORT` - 后端端口（默认: 3001）
-- `NODE_ENV` - 环境模式（development/production）
+```
+rpi/
+├── backend/                 # Node.js backend
+│   ├── index.js            # Express server
+│   ├── index.test.js       # Backend tests
+│   └── package.json
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── App.js          # Main app component
+│   │   ├── GuidePage.js    # Guide page
+│   │   ├── SettingsPage.js # Settings page
+│   │   └── SearchPage.js   # Search page
+│   ├── cypress/            # E2E tests
+│   └── package.json
+├── test-e2e.js            # E2E test script
+└── README.md
+```
 
-## 贡献
+## Contributing
 
-1. Fork 项目
-2. 创建功能分支
-3. 提交更改
-4. 运行测试
-5. 创建 Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 许可证
+## License
 
-MIT License 
+This project is licensed under the MIT License.
+
+## Support
+
+For support and questions, please create an issue on GitHub. 

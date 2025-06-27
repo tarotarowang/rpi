@@ -3,6 +3,7 @@ import { Input, List, Typography, Card, message } from 'antd';
 import axios from 'axios';
 
 const { Title } = Typography;
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 function SearchPage() {
   const [keyword, setKeyword] = useState('');
@@ -17,7 +18,7 @@ function SearchPage() {
     setLoading(true);
     setItems([]);
     try {
-      const res = await axios.post('/api/search', { keyword });
+      const res = await axios.post(`${API_URL}/search`, { keyword });
       setItems(res.data.items || []);
     } catch (e) {
       message.error('查询失败，或未设置 App ID');

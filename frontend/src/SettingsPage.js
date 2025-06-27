@@ -3,13 +3,14 @@ import { Form, Input, Button, message, Typography, Card, Alert, Divider } from '
 import axios from 'axios';
 
 const { Title, Paragraph, Text } = Typography;
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 function SettingsPage() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get('/api/settings').then(res => {
+    axios.get(`${API_URL}/settings`).then(res => {
       if (res.data && res.data.developer_id && res.data.app_id) {
         form.setFieldsValue({
           developer_id: res.data.developer_id,
@@ -23,7 +24,7 @@ function SettingsPage() {
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      await axios.post('/api/settings', values);
+      await axios.post(`${API_URL}/settings`, values);
       message.success('配置保存成功！现在可以使用商品查询功能了。');
     } catch (e) {
       console.error('保存失败:', e);
