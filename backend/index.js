@@ -12,7 +12,7 @@ const PORT = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-// SQLite DB 初始化
+// SQLite DB 初始化teesy
 const dbPath = path.resolve(__dirname, 'rpi.db');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
